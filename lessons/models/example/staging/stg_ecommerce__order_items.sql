@@ -9,12 +9,16 @@ SELECT
         order_id,
         user_id,
         product_id,
-        inventory_item_id,
+        {# inventory_item_id,
         status,
         created_at,
         shipped_at,
         delivered_at,
-        returned_at,
-        sale_price
+        returned_at, #}
+        sale_price as item_sale_price
 
 FROM source
+
+
+
+
