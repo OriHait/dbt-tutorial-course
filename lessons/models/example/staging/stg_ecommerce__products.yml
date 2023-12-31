@@ -6,13 +6,17 @@ models:
     columns:
       - name: product_id
         tests:
-          - not_null
-          - unique
+          - not_null:
+              severity: error
+          - unique:
+              severity: error
 
       - name: cost
         description: "How much the product cost the business to purchase"
         tests:
-          - not_null
+          - not_null:
+              warn_if: ">10"
+              error_if: ">100"
 
       - name: retail_price
         description: "How much the product retails for on the online store"
@@ -30,3 +34,4 @@ models:
               # quote defaults to true, but this just shows how you could set it to
               # false if you wanted to have non-string values (e.g. numbers or a TRUE/FALSE column)
               quote: true
+              severity: error
