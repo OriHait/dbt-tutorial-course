@@ -6,22 +6,24 @@ models:
     columns:
       - name: product_id
         tests:
-          - not_null:
-              severity: error
-          - unique:
+          - primary_key:
               severity: error
 
       - name: cost
         description: "How much the product cost the business to purchase"
         tests:
-          - not_null:
-              warn_if: ">10"
-              error_if: ">100"
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
 
       - name: retail_price
         description: "How much the product retails for on the online store"
         tests:
           - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+          - dbt_utils.expression_is_true:
+              expression: ">= cost"
 
       - name: department
         description: "Whether the item is Menswear or Womenswear"
@@ -34,4 +36,3 @@ models:
               # quote defaults to true, but this just shows how you could set it to
               # false if you wanted to have non-string values (e.g. numbers or a TRUE/FALSE column)
               quote: true
-              severity: error
